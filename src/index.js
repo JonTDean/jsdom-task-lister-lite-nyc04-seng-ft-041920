@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   descriptionButton.addEventListener('click', function(){
     event.preventDefault();
     newlist()
-    sortList()
   });
 
   function newlist() {
@@ -49,7 +48,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function userName(){
     let uName = document.getElementById('new-user-name');
-    return uName.value;
+    const whiteSpace = /\s/g;
+    let filterSpace = false;
+    let filterEmpty = false;
+
+    if(uName.match(whiteSpace)){
+      filterSpace = true;
+    }else if(uName.value == "" || uName == ""){
+      filterEmpty = true;
+    }
+
+    if(filterEmpty == true || filterSpace == true){
+      while(filterEmpty == true){
+        uName = checkForEmptyString();
+      }
+      while(filterSpace == true){
+        uName = checkForSpaces();
+      }
+    }
+    
+    return uName;
+  
+    function checkForEmptyString(){
+      let namePrompt = prompt("Please enter a Name, it can't be empty.");
+      while(namePrompt == null){
+        alert("Can't be empty!");
+        namePrompt = prompt("Please enter a Name, it can't be empty.");
+      }
+      if(namePrompt.match(whiteSpace)){
+        checkForSpaces()
+      }else if(namePrompt == null){
+        namePrompt = prompt("You entered null!");
+      }
+
+      alert("Hello " + namePrompt + "!");
+      return namePrompt;
+    }
+
+    function checkForSpaces(nameo){
+      let namePrompt = prompt("Please enter a Name, it can't have spaces!");
+
+      while(namePrompt == null){
+        alert("No Spaces!");
+        namePrompt = prompt("Please enter a Name, it can't have spaces!");
+      }
+      if(namePrompt == ""){
+        checkForEmptyString()
+      }else if(namePrompt == null){
+        namePrompt = prompt("You entered null!");
+      }
+      
+      alert("Hello " + namePrompt + "!");
+      return namePrompt;
+    }
   }
 
 
@@ -67,6 +118,7 @@ document.addEventListener('click', function(x){
     if (deleteButton == undefined){
       let deleteButton = document.createElement("input");
       deleteButton.setAttribute("type", "button");
+      deleteButton.value = "Delete"
       deleteButton.id = "delete";
 
       
